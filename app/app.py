@@ -1,65 +1,59 @@
-Here is an example of Python Flask API code that implements the given user story:
+Here is an example of Python Flask API code that implements the secure authentication mechanism for the Supplier Portal login functionality:
 
 ```python
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
-# Sample data for events
-events = [
-    {
-        'name': 'Music Concert',
-        'date': '2022-10-15',
-        'time': '19:00',
-        'location': 'City Hall',
-        'category': 'music',
-        'interests': ['rock', 'pop']
-    },
-    {
-        'name': 'Sports Tournament',
-        'date': '2022-11-05',
-        'time': '14:00',
-        'location': 'Sports Complex',
-        'category': 'sports',
-        'interests': ['football', 'basketball']
-    },
-    {
-        'name': 'Art Exhibition',
-        'date': '2022-12-01',
-        'time': '10:00',
-        'location': 'Art Gallery',
-        'category': 'arts',
-        'interests': ['painting', 'sculpture']
-    }
+# Dummy database to store supplier credentials
+suppliers = [
+    {'username': 'supplier1', 'password': generate_password_hash('password1')},
+    {'username': 'supplier2', 'password': generate_password_hash('password2')}
 ]
 
-@app.route('/events', methods=['GET'])
-def get_events():
-    # Get query parameters for filters
-    category = request.args.get('category')
-    date = request.args.get('date')
-    interests = request.args.getlist('interests')
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.json['username']
+    password = request.json['password']
 
-    filtered_events = []
+    supplier = next((s for s in suppliers if s['username'] == username), None)
+    if supplier and check_password_hash(supplier['password'], password):
+        session['username'] = username
+        return jsonify({'message': 'Login successful'})
+    else:
+        return jsonify({'message': 'Invalid username or password'}), 401
 
-    # Apply filters to events
-    for event in events:
-        if category and event['category'] != category:
-            continue
-        if date and event['date'] != date:
-            continue
-        if interests and not set(interests).intersection(event['interests']):
-            continue
-        filtered_events.append(event)
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('username', None)
+    return jsonify({'message': 'Logout successful'})
 
-    return jsonify(filtered_events)
+@app.route('/protected', methods=['GET'])
+def protected():
+    if 'username' in session:
+        return jsonify({'message': 'Access granted to protected resource'})
+    else:
+        return jsonify({'message': 'Access denied'}), 401
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 ```
 
-In this code, we define a Flask API with a single endpoint `/events` that accepts GET requests. The endpoint retrieves the query parameters for filters (category, date, and interests) from the request. It then applies these filters to the `events` data and returns the filtered events as a JSON response.
+This code uses Flask to create a simple API with three endpoints: `/login`, `/logout`, and `/protected`. 
 
-To test the API, you can run the code and make GET requests to `http://localhost:5000/events` with the desired filters as query parameters. For example, to filter events by category 'music' and interests 'rock' and 'pop', you can make a request to `http://localhost:5000/events?category=music&interests=rock&interests=pop`.
+The `/login` endpoint accepts a POST request with JSON data containing the username and password. It checks if the supplied credentials match any of the stored supplier credentials. If a match is found, the user is considered authenticated and a session is created with the username stored in it. Otherwise, an error message is returned.
 
-Note that this is a simplified example and does not include features like pagination, detailed event pages, or user profiles. You can extend the code to include these features based on your specific requirements.
+The `/logout` endpoint accepts a POST request and removes the username from the session, effectively logging out the user.
+
+The `/protected` endpoint is an example of a protected resource that requires authentication. It checks if the username is present in the session and returns the appropriate response.
+
+The code also includes session management configuration to set secure session cookies, define the session lifetime, and enforce strict same-site policy.
+
+Please note that this is a simplified example and should be adapted and enhanced to meet your specific requirements and security needs.
