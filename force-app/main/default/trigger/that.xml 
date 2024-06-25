@@ -1,0 +1,16 @@
+<userStory>
+  <title>Multi-channel loan application submission</title>
+  <description>As a customer, I want to be able to track the status of my loan application through the bank's website and mobile app, so that I can stay informed about the progress of my application in real-time.</description>
+  <acceptanceCriteria>
+    <criteria>The bank's website has a dedicated page for customers to track the status of their loan application.</criteria>
+    <criteria>The website provides a user-friendly interface that allows customers to easily access and view the current status of their application.</criteria>
+    <criteria>The website displays real-time updates on the progress of the application, including any changes in status or additional documentation required.</criteria>
+    <criteria>The mobile app includes a feature that allows customers to track the status of their loan application.</criteria>
+    <criteria>The app provides a seamless and intuitive user experience, making it easy for customers to check the progress of their application.</criteria>
+    <criteria>The app sends push notifications to customers whenever there is an update or change in the status of their application.</criteria>
+    <criteria>The system updates the status of the loan application in real-time, ensuring that customers have the most up-to-date information.</criteria>
+    <criteria>The website and mobile app provide a clear and concise explanation of each status update, helping customers understand the current stage of their application.</criteria>
+    <criteria>The system generates an application ID that customers can use to track their application across all channels.</criteria>
+    <criteria>The customer receives notifications through the respective channel (website or mobile app) regarding the successful submission of their application and an estimated timeline for loan processing.</criteria>
+  </acceptanceCriteria>
+</userStory>
