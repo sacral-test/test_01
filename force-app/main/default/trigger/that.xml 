@@ -1,0 +1,26 @@
+<Trigger>
+  <UserStory>
+    <As>A customer</As>
+    <I>want to be able to apply for a car mortgage loan through the bank's website, mobile app, or in-person at a branch</I>
+    <So>that I can conveniently start the loan process</So>
+  </UserStory>
+  <AcceptanceCriteria>
+    <Criterion>The system should provide an option for customers to apply for a car mortgage loan through the bank's website, mobile app, or in-person at a branch</Criterion>
+    <Criterion>The system should provide a user-friendly interface for customers to fill in their personal details, income proof, credit history, and employment details</Criterion>
+    <Criterion>The system should validate the entered details and provide appropriate error messages for incorrect or missing information</Criterion>
+    <Criterion>After successful submission, the system should provide a confirmation message to the customer</Criterion>
+    <Criterion>The system should store the application details securely for further processing by the bank</Criterion>
+  </AcceptanceCriteria>
+  <DefinitionOfDone>
+    <Criterion>The customer can access the loan application feature through the bank's website, mobile app, or in-person at a branch</Criterion>
+    <Criterion>The customer can fill in their personal details, income proof, credit history, and employment details through a user-friendly interface</Criterion>
+    <Criterion>The system validates the entered details and provides appropriate error messages for incorrect or missing information</Criterion>
+    <Criterion>The customer receives a confirmation message after successful submission of the application</Criterion>
+    <Criterion>The system stores the application details securely for further processing by the bank</Criterion>
+    <Criterion>The feature has been tested for functionality, usability, and security</Criterion>
+    <Criterion>The feature has been reviewed and approved by the product owner</Criterion>
+    <Criterion>The feature has been deployed to the production environment without any issues</Criterion>
+    <Criterion>The feature meets all the acceptance criteria and complies with the bank's standards and regulations</Criterion>
+    <Criterion>The feature's documentation has been updated and is ready for customer support</Criterion>
+  </DefinitionOfDone>
+</Trigger>
