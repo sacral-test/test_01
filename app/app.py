@@ -1,59 +1,45 @@
-Here is an example of Python Flask API code that implements the secure authentication mechanism for the Supplier Portal login functionality:
+Sure! Here's an example of a Python Flask API code that implements the credit check and pre-qualification process for loan applicants:
 
 ```python
-from flask import Flask, request, jsonify, session
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import timedelta
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
-app.config['SESSION_COOKIE_SECURE'] = True
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
-# Dummy database to store supplier credentials
-suppliers = [
-    {'username': 'supplier1', 'password': generate_password_hash('password1')},
-    {'username': 'supplier2', 'password': generate_password_hash('password2')}
-]
+@app.route('/pre-qualification', methods=['POST'])
+def pre_qualification():
+    # Get applicant data from request
+    data = request.get_json()
 
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.json['username']
-    password = request.json['password']
+    # Perform credit check and pre-qualification process
+    credit_score = data['credit_score']
+    financial_history = data['financial_history']
 
-    supplier = next((s for s in suppliers if s['username'] == username), None)
-    if supplier and check_password_hash(supplier['password'], password):
-        session['username'] = username
-        return jsonify({'message': 'Login successful'})
+    # Evaluate creditworthiness based on credit score and financial history
+    if credit_score >= 700 and financial_history == 'clean':
+        eligibility = True
+        loan_amount = 100000
+        interest_rate_range = (3.5, 5.0)
+        explanation = 'Congratulations! You are pre-qualified for a loan.'
     else:
-        return jsonify({'message': 'Invalid username or password'}), 401
+        eligibility = False
+        loan_amount = 0
+        interest_rate_range = (0, 0)
+        explanation = 'Sorry, you do not meet the pre-qualification criteria.'
 
-@app.route('/logout', methods=['POST'])
-def logout():
-    session.pop('username', None)
-    return jsonify({'message': 'Logout successful'})
+    # Prepare response
+    response = {
+        'eligibility': eligibility,
+        'loan_amount': loan_amount,
+        'interest_rate_range': interest_rate_range,
+        'explanation': explanation
+    }
 
-@app.route('/protected', methods=['GET'])
-def protected():
-    if 'username' in session:
-        return jsonify({'message': 'Access granted to protected resource'})
-    else:
-        return jsonify({'message': 'Access denied'}), 401
+    return jsonify(response)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 ```
 
-This code uses Flask to create a simple API with three endpoints: `/login`, `/logout`, and `/protected`. 
+This code defines a Flask API with a single endpoint `/pre-qualification` that accepts a POST request containing applicant data in JSON format. It performs the credit check and pre-qualification process based on the provided credit score and financial history. The eligibility, loan amount, interest rate range, and explanation are then returned as a JSON response.
 
-The `/login` endpoint accepts a POST request with JSON data containing the username and password. It checks if the supplied credentials match any of the stored supplier credentials. If a match is found, the user is considered authenticated and a session is created with the username stored in it. Otherwise, an error message is returned.
-
-The `/logout` endpoint accepts a POST request and removes the username from the session, effectively logging out the user.
-
-The `/protected` endpoint is an example of a protected resource that requires authentication. It checks if the username is present in the session and returns the appropriate response.
-
-The code also includes session management configuration to set secure session cookies, define the session lifetime, and enforce strict same-site policy.
-
-Please note that this is a simplified example and should be adapted and enhanced to meet your specific requirements and security needs.
+Please note that this is a simplified example and you may need to modify it to fit your specific requirements and integrate it with your existing systems.
