@@ -1,0 +1,9 @@
+<Trigger>
+  <UserStory>Bank Loan Approval Process: Evaluating Documents and Creditworthiness for Terms</UserStory>
+  <AcceptanceCriteria>
+    <Criterion>The system should review and verify all required documents, including identification, proof of income, credit history, and employment details.</Criterion>
+    <Criterion>The system should accurately assess the applicant's creditworthiness based on their credit score and financial history.</Criterion>
+    <Criterion>The system should provide a clear and comprehensive loan approval notification, specifying the approved loan amount, interest rate, and repayment period.</Criterion>
+    <Criterion>The loan approval notification should include any additional requirements or conditions that the applicant needs to fulfill before the loan can be disbursed.</Criterion>
+  </AcceptanceCriteria>
+</Trigger>
