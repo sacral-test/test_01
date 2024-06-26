@@ -1,45 +1,60 @@
-Sure! Here's an example of a Python Flask API code that implements the credit check and pre-qualification process for loan applicants:
+Here is an example of Python Flask API code that implements the given user story:
 
 ```python
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/pre-qualification', methods=['POST'])
-def pre_qualification():
-    # Get applicant data from request
-    data = request.get_json()
+@app.route('/credit-check', methods=['POST'])
+def perform_credit_check():
+    # Retrieve applicant's credit score from a reliable credit bureau
+    credit_score = request.json.get('credit_score')
 
-    # Perform credit check and pre-qualification process
-    credit_score = data['credit_score']
-    financial_history = data['financial_history']
+    # Analyze applicant's financial history
+    payment_history = request.json.get('payment_history')
+    outstanding_debts = request.json.get('outstanding_debts')
+    credit_utilization = request.json.get('credit_utilization')
 
-    # Evaluate creditworthiness based on credit score and financial history
-    if credit_score >= 700 and financial_history == 'clean':
-        eligibility = True
-        loan_amount = 100000
-        interest_rate_range = (3.5, 5.0)
-        explanation = 'Congratulations! You are pre-qualified for a loan.'
+    # Calculate creditworthiness score based on credit score and financial history
+    creditworthiness_score = calculate_creditworthiness_score(credit_score, payment_history, outstanding_debts, credit_utilization)
+
+    # Compare creditworthiness score against predetermined thresholds
+    if creditworthiness_score >= 700:
+        result = 'Approved'
     else:
-        eligibility = False
-        loan_amount = 0
-        interest_rate_range = (0, 0)
-        explanation = 'Sorry, you do not meet the pre-qualification criteria.'
+        result = 'Rejected'
 
-    # Prepare response
-    response = {
-        'eligibility': eligibility,
-        'loan_amount': loan_amount,
-        'interest_rate_range': interest_rate_range,
-        'explanation': explanation
-    }
+    # Generate report or summary of credit check results
+    report = generate_credit_check_report(credit_score, payment_history, outstanding_debts, credit_utilization, creditworthiness_score, result)
 
-    return jsonify(response)
+    return jsonify({'result': result, 'report': report})
+
+def calculate_creditworthiness_score(credit_score, payment_history, outstanding_debts, credit_utilization):
+    # Perform calculations to determine creditworthiness score
+    # You can define your own logic here based on the acceptance criteria
+
+    # Example calculation: creditworthiness score = credit score + payment history - outstanding debts - credit utilization
+    creditworthiness_score = credit_score + payment_history - outstanding_debts - credit_utilization
+
+    return creditworthiness_score
+
+def generate_credit_check_report(credit_score, payment_history, outstanding_debts, credit_utilization, creditworthiness_score, result):
+    # Generate a report or summary of credit check results
+    # You can format the report as per your requirements
+
+    report = f"Credit Score: {credit_score}\n"
+    report += f"Payment History: {payment_history}\n"
+    report += f"Outstanding Debts: {outstanding_debts}\n"
+    report += f"Credit Utilization: {credit_utilization}\n"
+    report += f"Creditworthiness Score: {creditworthiness_score}\n"
+    report += f"Result: {result}"
+
+    return report
 
 if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-This code defines a Flask API with a single endpoint `/pre-qualification` that accepts a POST request containing applicant data in JSON format. It performs the credit check and pre-qualification process based on the provided credit score and financial history. The eligibility, loan amount, interest rate range, and explanation are then returned as a JSON response.
+This code defines a Flask API with a single endpoint `/credit-check` that accepts a POST request. The request body should contain the applicant's credit score, payment history, outstanding debts, and credit utilization. The API then performs the credit check by calculating the creditworthiness score based on the provided data and compares it against a predetermined threshold. The result (approved or rejected) and a report summarizing the credit check results are returned as a JSON response.
 
-Please note that this is a simplified example and you may need to modify it to fit your specific requirements and integrate it with your existing systems.
+Please note that the code provided is a basic example and you may need to modify it to fit your specific requirements and integrate it with your existing system.
