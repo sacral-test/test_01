@@ -1,0 +1,18 @@
+<Trigger>
+  <UserStory>
+    <Title>Automated System for Verifying ID, Income, Credit, and Employment Details</Title>
+    <Description>
+      As a loan officer, I want an automated system to verify the identification, proof of income, credit history, and employment details of loan applicants, so that the verification process is more efficient and accurate.
+    </Description>
+    <AcceptanceCriteria>
+      <Criterion>The system should be able to accept various types of documents, including identification, proof of income, credit history, and employment details.</Criterion>
+      <Criterion>The system should automatically verify the authenticity of the documents submitted by the applicant.</Criterion>
+      <Criterion>The system should extract relevant information from the documents for further processing.</Criterion>
+      <Criterion>The system should flag any discrepancies or issues found during the verification process for manual review.</Criterion>
+      <Criterion>The system should maintain a record of the verification process for each applicant, including the documents verified and any issues identified.</Criterion>
+      <Criterion>The system should comply with all relevant data protection and privacy regulations.</Criterion>
+      <Criterion>The system should be able to handle a high volume of document verifications without performance degradation.</Criterion>
+      <Criterion>The system should provide a report summarizing the verification results for each applicant.</Criterion>
+    </AcceptanceCriteria>
+  </UserStory>
+</Trigger>
