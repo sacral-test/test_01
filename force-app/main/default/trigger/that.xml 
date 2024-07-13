@@ -1,0 +1,14 @@
+<userStory>
+  <title>Credit Check and Pre-Qualification: Loan Amount and Interest Rate Assessment</title>
+  <description>
+    As a bank analyst, I want to perform a credit check and pre-qualify applicants so that I can determine their loan amount and interest rate range.
+  </description>
+  <acceptanceCriteria>
+    <criteria>The system should allow the analyst to input the applicant's details for a credit check.</criteria>
+    <criteria>The system should integrate with a credit bureau to fetch the applicant's credit score.</criteria>
+    <criteria>The system should calculate the loan amount and interest rate range based on the applicant's credit score and financial history.</criteria>
+    <criteria>The system should display the pre-qualified loan amount and interest rate range to the analyst.</criteria>
+    <criteria>The system should allow the analyst to save the pre-qualification results for further processing.</criteria>
+    <criteria>The system should send a notification to the applicant about their pre-qualification status, loan amount, and interest rate range.</criteria>
+  </acceptanceCriteria>
+</userStory>
