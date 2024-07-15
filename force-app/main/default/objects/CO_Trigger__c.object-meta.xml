@@ -1,0 +1,9 @@
+nerate Salesforce Custom Objects metadata XML with nameField and mandatory fields for all objects used in the given trigger, you can follow these steps:
+
+1. Identify the objects used in the trigger: In the given trigger code, the objects used are Loan__c and Disbursement__c.
+
+2. Retrieve the metadata for each object: You can use the Salesforce Metadata API or Salesforce CLI to retrieve the metadata for each object. For example, using Salesforce CLI, you can run the following command to retrieve the metadata for the Loan__c object:
+
+   ```
+   sfdx force:source:retrieve -m CustomObject:Loan__c
+   
